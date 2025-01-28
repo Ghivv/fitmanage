@@ -21,4 +21,9 @@ class Instructor extends Model
     {
         return $this->hasMany(GymClass::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

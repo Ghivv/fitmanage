@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
         ]);
 
-        User::create([
+        $user_id = User::create([
             'name' => 'instructor',
             'email' => 'instructor@example.com',
             'password' => bcrypt('12345678'), // Gunakan bcrypt untuk hashing
@@ -50,6 +50,7 @@ class DatabaseSeeder extends Seeder
 
         $instructor = Instructor::create([
             'name' => 'pelatih fitness',
+            'user_id' => $user_id->id,
             'email' => 'fitness@example.com',
             'phone' => '081234567890',
             'specialization' => 'Yoga'

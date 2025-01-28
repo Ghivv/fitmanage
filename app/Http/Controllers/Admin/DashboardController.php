@@ -29,4 +29,9 @@ class DashboardController extends Controller
             'pendingClasses'
         ));
     }
+
+    // public function index()
+    // {
+    //     return view('admin.dashboard');
+    // }
 }

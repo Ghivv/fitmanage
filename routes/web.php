@@ -2,6 +2,12 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Instructor\DashboardController as InstructorDashboardController;
+use App\Http\Controllers\User\DashboardController as UserDashboardController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,4 +23,22 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+// Admin Routes
+Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/users', [AdminUserController::class, 'index'])->name('admin.users');
+    Route::post('/admin/users/{user}/update-role', [AdminUserController::class, 'updateRole'])->name('admin.users.updateRole');
+});
+
+// Instructor Routes
+Route::prefix('instructor')->middleware(['auth', 'instructor'])->group(function () {
+    Route::get('/dashboard', [InstructorDashboardController::class, 'index'])->name('dashboard');
+});
+
+// Member Routes
+Route::prefix('user')->middleware(['auth', 'user'])->group(function () {
+    Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
+});
+
+
+require __DIR__ . '/auth.php';

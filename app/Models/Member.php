@@ -30,4 +30,10 @@ class Member extends Model
     {
         return $this->belongsToMany(GymClass::class, 'attendances');
     }
+
+    // Relasi: Satu Member memiliki satu User
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
 }

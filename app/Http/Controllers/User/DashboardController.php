@@ -11,29 +11,34 @@ use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
+    // public function index()
+    // {
+    //     $member = auth::user()->user;
+
+    //     $upcomingClasses = GymClass::where('schedule', '>', now())
+    //         ->limit(5)
+    //         ->get();
+
+    //     $memberAttendances = Attendance::where('member_id', $member->id)
+    //         ->with('gymClass')
+    //         ->latest()
+    //         ->limit(1)
+    //         ->get();
+
+    //     $activePayments = Payment::where('member_id', $member->id)
+    //         ->where('status', 'pending')
+    //         ->get();
+
+    //     return view('dashboard', compact(
+    //         'member',
+    //         'upcomingClasses',
+    //         'memberAttendances',
+    //         'activePayments'
+    //     ));
+    // }
+
     public function index()
     {
-        $member = auth::user()->member;
-
-        $upcomingClasses = GymClass::where('schedule', '>', now())
-            ->limit(5)
-            ->get();
-
-        $memberAttendances = Attendance::where('member_id', $member->id)
-            ->with('gymClass')
-            ->latest()
-            ->limit(5)
-            ->get();
-
-        $activePayments = Payment::where('member_id', $member->id)
-            ->where('status', 'pending')
-            ->get();
-
-        return view('dashboard.index', compact(
-            'member',
-            'upcomingClasses',
-            'memberAttendances',
-            'activePayments'
-        ));
+        return view('user.dashboard');
     }
 }
