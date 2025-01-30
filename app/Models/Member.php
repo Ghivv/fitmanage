@@ -13,11 +13,23 @@ class Member extends Model
         'name',
         'email',
         'phone',
+        'address',
         'membership_package',
         'start_date',
         'end_date',
         'status'
     ];
+
+    protected $casts = [
+        'deleted_at' => 'datetime',
+        'start_date' => 'datetime',
+        'end_date' => 'datetime'
+    ];
+
+    public function isActive()
+    {
+        return now()->lte($this->end_date) && $this->status === 'active';
+    }
 
     // Relasi: Satu Member memiliki banyak Payment
     public function payments()

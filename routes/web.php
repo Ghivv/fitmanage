@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Instructor\DashboardController as InstructorDashboardController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\MemberController;
 
 
 
@@ -28,6 +29,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/users', [AdminUserController::class, 'index'])->name('admin.users');
     Route::post('/admin/users/{user}/update-role', [AdminUserController::class, 'updateRole'])->name('admin.users.updateRole');
+    Route::resource('members', MemberController::class);
 });
 
 // Instructor Routes
@@ -39,6 +41,8 @@ Route::prefix('instructor')->middleware(['auth', 'instructor'])->group(function 
 Route::prefix('user')->middleware(['auth', 'user'])->group(function () {
     Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
 });
+
+
 
 
 require __DIR__ . '/auth.php';
