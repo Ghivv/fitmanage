@@ -8,6 +8,7 @@ use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\InstructorController;
 
 
 Route::get('/', function () {
@@ -31,7 +32,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/users/{user}/update-role', [AdminUserController::class, 'updateRole'])->name('admin.users.updateRole');
     Route::resource('members', MemberController::class);
     Route::resource('schedules', ScheduleController::class);
-
+    Route::resource('instructors', InstructorController::class);
 });
 
 // Instructor Routes
