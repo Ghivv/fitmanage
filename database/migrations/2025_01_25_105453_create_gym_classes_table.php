@@ -16,8 +16,6 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->foreignId('instructor_id')->constrained('instructors')->onDelete('cascade');
-            $table->dateTime('schedule');
-            $table->integer('capacity');
             $table->timestamps();
         });
     }

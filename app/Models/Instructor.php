@@ -17,7 +17,7 @@ class Instructor extends Model
     ];
 
     // Relasi: Satu Instructor mengajar banyak Class
-    public function classes()
+    public function gym_classes()
     {
         return $this->hasMany(GymClass::class);
     }

@@ -13,7 +13,6 @@ class GymClass extends Model
         'name',
         'description',
         'instructor_id',
-        'schedule',
         'capacity'
     ];
 
@@ -34,8 +33,9 @@ class GymClass extends Model
         return $this->hasMany(Attendance::class, 'gymclass_id');
     }
 
-    public function scopeUpcoming($query)
+    public function schedules()
     {
-        return $query->where('schedule', '>', now());
+        return $this->hasMany(Schedule::class, 'gym_class_id');
     }
+
 }

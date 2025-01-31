@@ -11,6 +11,7 @@ use App\Models\Payment;
 use App\Models\Attendance;
 use App\Models\Equipment;
 use App\Models\GymClass;
+use App\Models\Schedule;
 
 class DatabaseSeeder extends Seeder
 {
@@ -34,7 +35,7 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
         ]);
 
-        $user_id = User::create([
+        User::create([
             'name' => 'instructor',
             'email' => 'instructor@example.com',
             'password' => bcrypt('12345678'), // Gunakan bcrypt untuk hashing
@@ -49,8 +50,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $instructor = Instructor::create([
-            'name' => 'pelatih fitness',
-            'user_id' => $user_id->id,
+            'name' => 'pelatih zumba',
             'email' => 'fitness@example.com',
             'phone' => '081234567890',
             'specialization' => 'Yoga'
@@ -58,11 +58,15 @@ class DatabaseSeeder extends Seeder
 
         // Membuat data dummy untuk Class
         $class = GymClass::create([
-            'name' => 'Yoga Beginner',
-            'description' => 'Kelas yoga untuk pemula.',
+            'name' => 'Yoga',
+            'description' => 'Kelas yoga untuk relaksasi dan pernapasan.',
+            'instructor_id' => $instructor->id, // Pastikan instruktur dengan ID 1 ada
+        ]);
+
+        $class = GymClass::create([
+            'name' => 'Zumba',
+            'description' => 'Kelas zumba untuk meningkatkan kebugaran dengan gerakan tari.',
             'instructor_id' => $instructor->id,
-            'schedule' => '2025-01-30 10:00:00',
-            'capacity' => 20
         ]);
 
         // Membuat data dummy untuk Member
@@ -98,6 +102,18 @@ class DatabaseSeeder extends Seeder
             'quantity' => 5,
             'last_maintenance_date' => '2025-01-15',
             'next_maintenance_date' => '2025-02-15'
+        ]);
+
+        schedule::create([
+            'gym_class_id' => 1,  // ID kelas Yoga
+            'schedule_time' => now()->addDays(2)->setTime(8, 0), // Jadwal 2 hari lagi jam 08:00
+            'status' => 'active',
+        ]);
+
+        Schedule::create([
+            'gym_class_id' => 2,  // ID kelas Zumba
+            'schedule_time' => now()->addDays(3)->setTime(10, 0), // Jadwal 3 hari lagi jam 10:00
+            'status' => 'active',
         ]);
     }
 }
