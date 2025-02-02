@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\InstructorController;
+use App\Http\Controllers\GymClassController;
 
 
 Route::get('/', function () {
@@ -33,6 +34,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::resource('members', MemberController::class);
     Route::resource('schedules', ScheduleController::class);
     Route::resource('instructors', InstructorController::class);
+    Route::resource('gym_classes', GymClassController::class);
 });
 
 // Instructor Routes
