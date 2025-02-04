@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
             $table->foreignId('member_id')->constrained('members')->onDelete('cascade');
-            $table->foreignId('gymclass_id')->constrained('gym_classes')->onDelete('cascade');
+            $table->foreignId('gymclass_id')->nullable()->constrained('gym_classes')->onDelete('cascade');
             $table->dateTime('check_in')->nullable();
             $table->dateTime('check_out')->nullable();
             $table->timestamps();

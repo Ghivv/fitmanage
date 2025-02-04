@@ -11,7 +11,7 @@ class Attendance extends Model
 
     protected $fillable = [
         'member_id',
-        'class_id',
+        'gymclass_id',
         'check_in',
         'check_out'
     ];
@@ -23,7 +23,7 @@ class Attendance extends Model
     }
 
     // Relasi: Satu Attendance dimiliki oleh satu Class
-    public function class()
+    public function gymclass()
     {
         return $this->belongsTo(GymClass::class);
     }
