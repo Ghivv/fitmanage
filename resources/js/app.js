@@ -1,4 +1,6 @@
 import './bootstrap';
+import { gsap } from "gsap";
+
 
 import Alpine from 'alpinejs';
 
