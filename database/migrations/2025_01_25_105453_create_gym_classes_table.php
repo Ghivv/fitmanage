@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('gym_classes', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('gym_id')->constrained('gyms')->onDelete('cascade');
             $table->string('name');
             $table->text('description')->nullable();
             $table->foreignId('instructor_id')->constrained('instructors')->onDelete('cascade');

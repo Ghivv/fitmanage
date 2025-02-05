@@ -11,12 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('schedules', function (Blueprint $table) {
+        Schema::create('gyms', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('gym_id')->constrained('gyms')->onDelete('cascade');
-            $table->foreignId('gym_class_id')->constrained()->onDelete('cascade');
-            $table->dateTime('schedule_time');
-            $table->enum('status', ['active', 'cancelled'])->default('active');
+            $table->string('nama');
+            $table->text('alamat');
+            $table->string('kota');
+            $table->string('nomor_telepon')->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->string('website')->nullable();
+            $table->string('logo')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('schedules');
+        Schema::dropIfExists('gyms');
     }
 };

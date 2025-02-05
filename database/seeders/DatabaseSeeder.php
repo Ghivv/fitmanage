@@ -72,6 +72,7 @@ class DatabaseSeeder extends Seeder
         // Membuat data dummy untuk Member
         $member = Member::create([
             'name' => 'masghiv',
+            'user_id' => 1,
             'email' => 'masghiv@example.com',
             'phone' => '089876543210',
             'membership_package' => 'Monthly',
