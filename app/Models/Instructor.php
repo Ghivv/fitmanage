@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\GymScope;
 
 class Instructor extends Model
 {
-    use HasFactory;
+    use HasFactory, GymScope;
 
     protected $fillable = [
+        'gym_id',
         'name',
         'email',
         'phone',
@@ -25,5 +27,10 @@ class Instructor extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function gym()
+    {
+        return $this->belongsTo(Gym::class);
     }
 }

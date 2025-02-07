@@ -10,6 +10,10 @@
         </div>
     @endif
 
+    <div>
+        <x-primary-button><a href="{{ route('superadmin.users.create') }}" class="px-4 py-2">Add User</a></x-primary-button>
+    </div>
+
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
         <table class="min-w-full leading-normal">
             <thead>
@@ -33,7 +37,10 @@
                                     <option value="user" {{ $user->role === 'user' ? 'selected' : '' }}>User</option>
                                     <option value="instructor" {{ $user->role === 'instructor' ? 'selected' : '' }}>Instructor</option>
                                     <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>Admin</option>
+                                    <option value="admin" {{ $user->role === 'superadmin' ? 'selected' : '' }}>SuperAdmin</option>
                                 </select>
+
+                                <button type="submit" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Update</button>
                             </form>
                         </td>
                     </tr>

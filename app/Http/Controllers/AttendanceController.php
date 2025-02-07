@@ -14,6 +14,7 @@ class AttendanceController extends Controller
      */
     public function index()
     {
+        
         $attendances = Attendance::with(['member', 'gymClass'])->get();
         return view('attendances.index', compact('attendances'));
     }

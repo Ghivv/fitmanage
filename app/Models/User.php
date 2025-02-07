@@ -55,4 +55,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Member::class);
     }
+
+    public function gym()
+    {
+        return $this->belongsTo(Gym::class);
+    }
 }

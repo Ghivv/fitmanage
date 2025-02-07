@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\GymScope;
 
 class Member extends Model
 {
-    use HasFactory;
+    use HasFactory, GymScope;
 
     protected $fillable = [
+        'gym_id',
         'name',
         'email',
         'phone',
