@@ -2,96 +2,109 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Attendance;
-use App\Models\Member;
 use App\Models\GymClass;
+use App\Models\Member;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        
-        $attendances = Attendance::with(['member', 'gymClass'])->get();
-        return view('attendances.index', compact('attendances'));
+        $attendance = Attendance::with(['member', 'gymClass'])
+            ->whereHas('member', function ($query) {
+                $query->where('gym_id', Auth::user()->gym_id);
+            })
+            ->get();
+
+        return view('attendances.index', compact('attendance'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        $members = Member::all();
-        $gymClasses = GymClass::all();
+        $members = Member::where('gym_id', Auth::user()->gym_id)->get();
+        $gymClasses = GymClass::where('gym_id', Auth::user()->gym_id)->get();
         return view('attendances.create', compact('members', 'gymClasses'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'member_id' => 'required|exists:members,id',
-            'gymclass_id' => 'nullable|exists:gym_classes,id',
+            'gym_class_id' => 'required|exists:gym_classes,id',
             'check_in' => 'required|date',
         ]);
 
-        Attendance::create([
-            'member_id' => $request->member_id,
-            'gymclass_id' => $request->gym_class_id ?? null,
-            'check_in' => $request->check_in,
-            'check_out' => null,
-        ]);
+        // Pastikan member_id berasal dari gym yang sesuai
+        if (!Member::where('id', $validated['member_id'])->where('gym_id', Auth::user()->gym_id)->exists()) {
+            return redirect()->back()->withErrors(['member_id' => 'Member tidak valid.']);
+        }
 
-        return redirect()->route('attendances.index')->with('success', 'Attendance created successfully.');
+        // Pastikan gymclass_id berasal dari gym admin jika ada
+        if (!GymClass::where('id', $validated['gym_class_id'])->where('gym_id', Auth::user()->gym_id)->exists()) {
+            return redirect()->back()->withErrors(['gym_class_id' => 'Kelas gym tidak valid.']);
+        }
+
+        // Tambahkan gym_id sesuai dengan pengguna yang login
+        $validated['gym_id'] = Auth::user()->gym_id;
+
+        Attendance::create($validated);
+
+        return redirect()->route('attendances.index')->with('success', 'Presensi berhasil dicatat!');
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show($id)
     {
-        $attendance = Attendance::with(['member', 'gymClass'])->find($id);
+        $attendance = Attendance::with(['member', 'gymClass'])->findOrFail($id);
+
+        $this->authorizeAttendanceAccess($attendance);
+
         return view('attendances.show', compact('attendance'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit($id)
     {
-        $attendance = Attendance::findOrFail($id);
-        return view('attendances.edit', compact('attendance'));
+        $attendance = Attendance::with(['member', 'gymClass'])->findOrFail($id);
+
+        $this->authorizeAttendanceAccess($attendance);
+
+        return view('attendances.edit', compact('attendance',));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'check_out' => 'required|date|after:check_in',
         ]);
 
         $attendance = Attendance::findOrFail($id);
+
+        $this->authorizeAttendanceAccess($attendance);
+
         $attendance->update([
             'check_out' => $request->check_out,
         ]);
 
         return redirect()->route('attendances.index')->with('success', 'Check-out berhasil!');
-        }
+    }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
         $attendance = Attendance::findOrFail($id);
+
+        $this->authorizeAttendanceAccess($attendance);
+
         $attendance->delete();
         return redirect()->route('attendances.index')->with('success', 'Data kehadiran dihapus.');
+    }
+
+    private function authorizeAttendanceAccess(Attendance $attendance)
+    {
+        if ($attendance->gym_id !== Auth::user()->gym_id) {
+            abort(403, 'Anda tidak diizinkan mengakses sumber daya ini.');
+        }
     }
 }

@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Traits\BelongsToGym;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Traits\GymScope;
 
 class GymClass extends Model
 {
-    use HasFactory, GymScope;
+    use HasFactory, BelongsToGym;
 
     protected $fillable = [
         'gym_id',

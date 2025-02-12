@@ -18,6 +18,11 @@ export default {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans],
             },
             colors: {
+                "fitmanage-green": {
+                    DEFAULT: "#22C55E", // Sesuaikan dengan warna hijau dari gambar
+                    dark: "#16A34A",
+                    light: "#4ADE80",
+                },
                 "fitmanage-gray": {
                     DEFAULT: "#6B7280",
                     dark: "#4B5563",

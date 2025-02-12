@@ -73,6 +73,12 @@
                             </tbody>
                         </table>
                     </div>
+
+                    <nav>
+                        <ul>
+                            <li>{{ $instructors->links() }}</li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>

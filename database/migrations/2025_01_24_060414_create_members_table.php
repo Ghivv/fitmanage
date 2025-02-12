@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('gym_id')->constrained('gyms')->onDelete('cascade');
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('phone')->nullable();
             $table->text('address')->nullable();
             $table->string('membership_package')->nullable();

@@ -22,10 +22,10 @@
                 @endforeach
             </select>
         </div>
-        <div class="mb-6">
+        {{-- <div class="mb-6">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="capacity">Kapasitas:</label>
             <input type="number" name="capacity" id="capacity" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-        </div>
+        </div> --}}
         <div class="flex justify-center">
             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                 Simpan

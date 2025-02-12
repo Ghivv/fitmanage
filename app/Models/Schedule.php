@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Traits\GymScope;
+use App\Models\Traits\BelongsToGym;
 
 class Schedule extends Model
 {
-    use HasFactory, GymScope;
+    use HasFactory, BelongsToGym;
 
     protected $fillable = [
         'gym_id',
