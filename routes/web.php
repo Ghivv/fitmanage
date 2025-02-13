@@ -17,15 +17,8 @@ use App\Models\Gym;
 use App\Models\User;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 })->name('home');
-
-Route::get('/coba', function () {
-    // $user = User::find(2);
-    $gym = Gym::find(1);
-    dd($gym->user->toArray());
-    // return view('coba');
-});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
